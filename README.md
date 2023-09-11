@@ -2,20 +2,24 @@
 The script can distinguish between URLs that are immune to SQL Injection and protected by Cloudflare. 
 
 
-requirements
+requirements:
 Before you begin, make sure you have the following:
 Python 3 is installed on your system. It can be downloaded from the official Python website.
-Request library used to send HTTP requests. It can be installed using pip.
+Request library used to send HTTP requests.
 
+
+It can be installed using pip.
 pip install request
 
 step 1:Script overview
+
 This script is designed to check a list of URLs for SQL injection vulnerabilities and determine whether a URL is protected by Cloudflare. Use the Requests library for  HTTP requests and the urllib.parse module for URL manipulation.
 
 Here's a brief overview of how the script works:
 It takes a list of URLs as input, either from a file or as a single URL. For each URL, it checks for SQL  Injection vulnerabilities by appending a payload to the URL's query parameter. It analyzes the response for  signs of SQL Injection and Cloudflare protection. The script displays the results in the terminal.
 
 Step 2:Script Implementation
+
 # Let's break down the script step by step: Import the necessary modules:
 
 
@@ -87,6 +91,7 @@ else:
     check_sql_injection(input_arg)
  
 Step 3:Running the Script
+
 To run the script, you can use the following command:
 
 python script.py url
@@ -94,10 +99,14 @@ python script.py url
 Replace with either a single URL or a file containing a list of URLs.
 
 
+
+
 Conclusion:
 
 With this Python script, you can quickly scan a list of URLs for potential SQL injection vulnerabilities. It is important to regularly test your web applications for security vulnerabilities and take appropriate steps to protect sensitive data. Use this script responsibly and only on sites that you have permission to test. Always follow ethical hacking practices and obtain proper permissions before scanning web applications for vulnerabilities.
 
 
-Disclaimer
+
+
+Disclaimer:
 This script is for educational purposes only. Do not use it to perform any unauthorized or malicious activities. Always ensure that you have proper authorization to test and analyze websites for security vulnerabilities.
