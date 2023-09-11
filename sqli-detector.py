@@ -20,7 +20,7 @@ def check_sql_injection(url):
         target_url = f"{url}?q={encoded_payload}"
 
         # Send an HTTP GET request to the modified URL
-        response = requests.get(target_url, timeout=10 , redirect=False)
+        response = requests.get(target_url, timeout=10 , allow_redirects=False)
 
         if "Server" in response.headers and "cloudflare" in response.headers["Server"].lower():
             print(f"Cloudflare Protection Detected for {url}")
