@@ -52,7 +52,7 @@ It takes a list of URLs as input, either from a file or as a single URL. For eac
             target_url = f"{url}?q={encoded_payload}"
 
  # Send an HTTP GET request to the modified URL with a timeout
-            response = requests.get(target_url, timeout=10)
+            response = requests.get(target_url, timeout=10, allow_redirects=False)
 
  # Check for Cloudflare protection and SQL Injection signs in the response
 
